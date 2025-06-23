@@ -1,0 +1,6 @@
+[submodule "deps/which-key.nvim"]
+	path = deps/which-key.nvim
+	url = https://github.com/folke/which-key.nvim
+[submodule "deps/nvim-surround"]
+	path = deps/nvim-surround
+	url = https://github.com/kylechui/nvim-surround
