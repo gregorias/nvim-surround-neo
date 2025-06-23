@@ -17,4 +17,18 @@ M.filter = function(predicate, t)
 	return result
 end
 
+--- Maps a table to another table.
+---
+---@generic K, V, R
+---@param func fun(K, V): R
+---@param t table<K, V>
+---@return table<K, R>
+M.map = function(func, t)
+	local result = {}
+	for key, value in pairs(t) do
+		result[key] = func(key, value)
+	end
+	return result
+end
+
 return M

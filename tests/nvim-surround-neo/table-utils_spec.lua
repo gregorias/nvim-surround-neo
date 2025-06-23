@@ -13,4 +13,32 @@ describe("nvim-surround-neo.table-utils", function()
 			)
 		end)
 	end)
+
+	describe("map", function()
+		local map = table_utils.map
+		it("maps over lists", function()
+			assert.are.same(
+				{ 3, 6, 9 },
+				map(function(k, v)
+					return v * 2 + k
+				end, { 1, 2, 3 })
+			)
+		end)
+		it("maps over key-value tables", function()
+			assert.are.same(
+				{ foo = 2, bar = 4 },
+				map(function(_, v)
+					return v * 2
+				end, { foo = 1, bar = 2 })
+			)
+		end)
+		it("returns empty table for empty input", function()
+			assert.are.same(
+				{},
+				map(function(_, v)
+					return v
+				end, {})
+			)
+		end)
+	end)
 end)

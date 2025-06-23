@@ -1,12 +1,6 @@
 local M = {}
 
-function map(t, func)
-	local result = {}
-	for key, value in pairs(t) do
-		result[key] = func(key, value)
-	end
-	return result
-end
+-- map has been moved to table-utils.lua
 
 function map_to_list(t, func)
 	local result = {}
@@ -41,10 +35,11 @@ function get_labeled_chars(action)
 		return surround.delete ~= nil
 	end, surrounds)
 
-	return map(surrounds, function(key, _)
+	local map = require("nvim-surround-neo.table-utils").map
+	return map(function(key, _)
 		local label = labels[key] or key
 		return label
-	end)
+	end, surrounds)
 end
 
 ---@return wk.Spec[]
