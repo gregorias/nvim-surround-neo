@@ -1,28 +1,5 @@
 local M = {}
 
--- TODO: Move to a dedicated module.
---- Gets the keys of a table.
----
----@param t table
----@return string[]
-function get_keys(t)
-	local keys = {}
-	for key in pairs(t) do
-		table.insert(keys, key)
-	end
-	return keys
-end
-
-function filter(t, predicate)
-	local result = {}
-	for key, value in pairs(t) do
-		if predicate(key, value) then
-			result[key] = value
-		end
-	end
-	return result
-end
-
 function map(t, func)
 	local result = {}
 	for key, value in pairs(t) do
@@ -56,11 +33,13 @@ local labels = {
 function get_labeled_chars(action)
 	assert(action == "delete", "Only 'delete' action is supported for now.")
 
+	local filter = require("nvim-surround-neo.table-utils").filter
+
 	local surround_config = require("nvim-surround.config")
 	local surrounds = surround_config.get_opts().surrounds
-	surrounds = filter(surrounds, function(key, surround)
+	surrounds = filter(function(surround)
 		return surround.delete ~= nil
-	end)
+	end, surrounds)
 
 	return map(surrounds, function(key, _)
 		local label = labels[key] or key

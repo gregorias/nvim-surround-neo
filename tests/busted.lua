@@ -7,10 +7,6 @@ require("lazy.minit").busted({
 	spec = {
 		{ "https://github.com/lunarmodules/luacov" },
 	},
-	rocks = {
-		-- Required for Busted.
-		enabled = true,
-	},
 })
 
 -- Trigger luacov to generate the report.

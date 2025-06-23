@@ -1,0 +1,11 @@
+return {
+  include = {
+    "lua/nvim-surround-neo$",
+    "lua/nvim-surround-neo/table-utils$",
+  },
+  modules = {
+    ["nvim-surround-neo"] = "lua/nvim-surround-neo.lua",
+    ["nvim-surround-neo.table-utils"] = "lua/nvim-surround-neo/table-utils.lua",
+  },
+  reporter = "html",
+}
