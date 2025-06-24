@@ -31,4 +31,17 @@ M.map = function(func, t)
 	return result
 end
 
+---
+--- Returns an array of values from a table, discarding keys.
+---
+---@param t table
+---@return table
+M.values = function(t)
+	local result = {}
+	for _, v in pairs(t) do
+		table.insert(result, v)
+	end
+	return result
+end
+
 return M

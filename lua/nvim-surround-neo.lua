@@ -1,15 +1,5 @@
 local M = {}
 
--- map has been moved to table-utils.lua
-
-function map_to_list(t, func)
-	local result = {}
-	for key, value in pairs(t) do
-		table.insert(result, func(key, value))
-	end
-	return result
-end
-
 local labels = {
 	["("] = "( … )",
 	[")"] = "(…)",
@@ -24,6 +14,7 @@ local labels = {
 	["`"] = "`…`",
 }
 
+---@return table<string, any>
 function get_labeled_chars(action)
 	assert(action == "delete", "Only 'delete' action is supported for now.")
 
@@ -44,11 +35,13 @@ end
 
 ---@return wk.Spec[]
 local expand_delete_surrounds = function()
-	local surround_config = require("nvim-surround.config")
 	-- TODO: Use aliases as well.
 	local labeled_chars = get_labeled_chars("delete")
 
-	return map_to_list(labeled_chars, function(key, label)
+	local map = require("nvim-surround-neo.table-utils").map
+	local values = require("nvim-surround-neo.table-utils").values
+
+	return values(map(function(key, label)
 		return {
 			key,
 			function()
@@ -60,7 +53,7 @@ local expand_delete_surrounds = function()
 			desc = label,
 			silent = true,
 		}
-	end)
+	end, labeled_chars))
 end
 
 M.setup = function()
