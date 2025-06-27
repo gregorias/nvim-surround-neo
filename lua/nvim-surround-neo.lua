@@ -33,7 +33,7 @@ function get_labeled_chars(action)
 	end, surrounds)
 end
 
----@return wk.Spec[]
+---@return nsn.KeymapSpec[]
 local expand_delete_surrounds = function()
 	-- TODO: Use aliases as well.
 	local labeled_chars = get_labeled_chars("delete")
@@ -43,24 +43,35 @@ local expand_delete_surrounds = function()
 
 	return values(map(function(key, label)
 		return {
-			key,
-			function()
+			lhs = key,
+			rhs = function()
 				local cache = require("nvim-surround.cache")
 				cache.delete = { char = key, count = vim.v.count1 }
 				vim.go.operatorfunc = "v:lua.require'nvim-surround'.delete_callback"
 				vim.api.nvim_feedkeys("g@l", "in", false)
 			end,
 			desc = label,
-			silent = true,
 		}
 	end, labeled_chars))
 end
 
+local default_opts = {
+	keymaps = {
+		delete = "gsd",
+	},
+}
+
 M.setup = function()
-	local which_key = require("which-key")
 	local surround = require("nvim-surround")
-	which_key.add({
-		"gsD",
+	local wk_status, wk = pcall(require, "which-key")
+	local keymap_registry = nil
+	if wk_status then
+		keymap_registry = require("nvim-surround-neo.keymaps").create_wk_registry(wk)
+	else
+		keymap_registry = require("nvim-surround-neo.keymaps").plain_registry
+	end
+	keymap_registry({
+		lhs = default_opts.keymaps.delete,
 		group = "Delete a surrounding pair",
 		expand = expand_delete_surrounds,
 	})

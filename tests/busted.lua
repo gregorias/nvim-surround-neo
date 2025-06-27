@@ -6,8 +6,8 @@ load(vim.fn.system("curl -s https://raw.githubusercontent.com/folke/lazy.nvim/ma
 require("lazy.minit").busted({
 	spec = {
 		{ "https://github.com/lunarmodules/luacov" },
-		{ dir = "deps/nvim-surround" },
-		{ dir = "deps/which-key.nvim" },
+		{ dir = "deps/nvim-surround", config = true },
+		-- Not adding Which Key, because it is not possible to use it in tests.
 	},
 })
 
