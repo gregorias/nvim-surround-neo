@@ -79,7 +79,6 @@ M.plain_registry = function(mappings)
 			if not chr then
 				return nil
 			end
-			print(chr)
 
 			local submappings = mapping.expand()
 			for _, submapping in ipairs(submappings) do
