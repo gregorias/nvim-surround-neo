@@ -12,6 +12,9 @@ local labels = {
 	['"'] = '"…"',
 	["'"] = "'…'",
 	["`"] = "`…`",
+	["t"] = "<tag>…</tag>",
+	["T"] = "<tag>…</tag>",
+	["f"] = "foo(…)",
 }
 
 ---@return table<string, any>
@@ -27,7 +30,7 @@ function get_labeled_chars(action)
 	end, surrounds)
 
 	local map = require("nvim-surround-neo.table-utils").map
-	return map(function(key, _)
+	return map(function(key, v)
 		local label = labels[key] or key
 		return label
 	end, surrounds)
@@ -60,6 +63,15 @@ local default_opts = {
 		delete = "gsd",
 	},
 }
+
+--- Adds a label for an nvim-surround key.
+---
+---@param key string
+---@param label string
+---@return nil
+M.add_surround_label = function(key, label)
+	labels[key] = label
+end
 
 M.setup = function()
 	local surround = require("nvim-surround")
