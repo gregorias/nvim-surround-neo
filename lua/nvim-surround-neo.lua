@@ -1,5 +1,7 @@
 local M = {}
 
+-- TODO: nvim-surround accepts all chars as possible surrounds, not just preconfigured ones.
+-- Rework the labels to show non-configured ones as well.
 local labels = {
 	["("] = "( … )",
 	[")"] = "(…)",
@@ -9,12 +11,20 @@ local labels = {
 	["}"] = "{…}",
 	["<"] = "< … >",
 	[">"] = "<…>",
+	["a"] = "<…>",
 	['"'] = '"…"',
 	["'"] = "'…'",
 	["`"] = "`…`",
 	["t"] = "<tag>…</tag>",
 	["T"] = "<tag>…</tag>",
 	["f"] = "foo(…)",
+	["<space>"] = "␣…␣",
+	["*"] = "*…*",
+	["_"] = "_…_",
+	["i"] = "left…right",
+	-- TODO: The aliases below are only for the delete mode.
+	["q"] = "\"|'|`",
+	["s"] = "}|]|)|>|\"|'|`",
 }
 
 ---@return table<string, any>
